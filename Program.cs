@@ -73,6 +73,7 @@
                 Console.WriteLine("2-Get previous page");
                 Console.WriteLine("3-Get next page");
                 Console.WriteLine("4-Add page");
+                Console.WriteLine("5-Get all pages");
                 Console.WriteLine();
                 Console.WriteLine("0-Exit");
 
@@ -112,6 +113,9 @@
                             newBook.AddPage(content,pageNumber);
                             break;
                         }
+                    case 5:
+                        Console.WriteLine(newBook.GetAllPages());
+                        break;
                 }
 
                     
