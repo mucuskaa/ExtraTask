@@ -61,7 +61,7 @@
 
             };
 
-            Book newBook = new Book("Vuk", "István Fekete", 8, text,1);
+            Book newBook = new Book("Vuk", "István Fekete", 300, text);
 
             uint a;
             bool stopread = false;
@@ -70,8 +70,8 @@
             {
                 
                 Console.WriteLine("1-Start reading");
-                Console.WriteLine("2-Get previous page");
-                Console.WriteLine("3-Get next page");
+                Console.WriteLine("2-Get next page");
+                Console.WriteLine("3-Get previous page");
                 Console.WriteLine("4-Add page");
                 Console.WriteLine("5-Get all pages");
                 Console.WriteLine();
@@ -88,14 +88,23 @@
                         stopread = true;
                         continue;
                     case 1:
-                        Console.WriteLine(newBook.StartReading());
-                        break;
+                        {
+                            newBook.StartReading();
+                            newBook.GetContetn();
+                            break;
+                        }
                     case 2:
-                        Console.WriteLine(newBook.GetPreviousPage());
-                        break;
+                        {
+                            newBook.GetNextPage();
+                            newBook.GetContetn();
+                            break;
+                        }
                     case 3:
-                        Console.WriteLine(newBook.GetNextPage());
-                        break;
+                        {
+                            newBook.GetPreviousPage();
+                            newBook.GetContetn();
+                            break;
+                        }
                     case 4:
                         {
                             uint pageNumber;
@@ -114,7 +123,7 @@
                             break;
                         }
                     case 5:
-                        Console.WriteLine(newBook.GetAllPages());
+                        newBook.GetAllPages();
                         break;
                 }
 

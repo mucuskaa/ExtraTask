@@ -9,102 +9,92 @@ namespace ExtraTask
 {
     internal class Book
     {
-        private uint countOfPages;
 
-        private uint pageIndex;
+        private uint pageIndex = 0;
 
         private Page[] pages;
 
-        private string line = "                  ";
+        public string line = new string(' ', 18);
+        public uint CountOfPages { get; }
         public string Title { get; }
         public string Author { get; }
+        public Page CurrentPage { get; set; }
 
-        public Book(string title, string author, uint countOfPages, string[] pages, uint pageIndex)
+        public Book(string title, string author, uint countOfPages, string[] pages)
         {
             Title = title;
             Author = author;
 
-            this.countOfPages = countOfPages+1;
-            this.pages = new Page[countOfPages+1];
+            CountOfPages = countOfPages;
+            this.pages = new Page[countOfPages];
 
             InitPages(pages);
-            this.pageIndex = pageIndex;
         }
 
         private void InitPages(string[] pages)
         {
-            for (uint i = 1; i <= countOfPages-1; i++)
+            for (uint i = 0; i < pages.Length; i++)
             {
 
-                this.pages[i] = new Page(pages[i-1], i);
+                this.pages[i] = new Page(pages[i], i);
 
             }
         }
 
-        public string GetCurrentPage(uint number)
-        {
-            return line +pages[number].Content;
-        }
+        public Page StartReading() => CurrentPage = pages[0];
 
-        public string StartReading(uint number = 1)
+        public Page GetNextPage()
         {
-            return GetCurrentPage(number);
-        }
-
-        public string GetNextPage()
-        {
-            if (pageIndex == countOfPages)
+            if (pages[pageIndex + 1] != null)
             {
-                return "You are already at the end!\n";
-            }
-            pageIndex++;
-            return GetCurrentPage(pageIndex);
-        }
-
-        public string GetPreviousPage()
-        {
-            if (pageIndex - 1 == 0)
-            {
-                return "You are already at the beginning!\n";
-            }
-            pageIndex--;
-            return GetCurrentPage(pageIndex);
-        }
-
-        public string GetAllPages()
-        {
-            for (uint i = 1; i <= countOfPages; i++)
-            {
-                Console.WriteLine(line+pages[i].Content + "\n");
+                pageIndex++;
+                return CurrentPage = pages[pageIndex];
             }
 
-            return "";
+            return CurrentPage = pages[0];
+        }
+
+        public Page GetPreviousPage()
+        {
+            if (pages[pageIndex - 1] != null)
+            {
+                pageIndex--;
+                return CurrentPage = pages[pageIndex];
+            }
+
+            return CurrentPage = pages[0];
+        }
+
+        public void GetAllPages()
+        {
+            CurrentPage=pages[0];
+            for (uint i = 0; i < CountOfPages; i++)
+            {
+                if (CurrentPage == null)
+                    break;
+
+                Console.WriteLine(line + CurrentPage.Content + "\n");
+                CurrentPage = pages[i];
+            }
+
+        }
+
+        public void GetContetn()
+        {
+            Console.WriteLine(line + CurrentPage.Content);
         }
 
         public void AddPage(string content, uint number)
         {
-            if (number >= 1 && number <= countOfPages+1)
+            number--;
+            if (number <= pages.Length)
             {
-                Page[] newPages = new Page[countOfPages+1];
-
-                for (uint i = 1; i <number; i++)
-                {
-                    newPages[i] = pages[i];
-                }
-
-                newPages[number] = new Page(content, number);
-
-                for (uint i = number + 1; i <= countOfPages; i++)
-                {
-                    newPages[i] = pages[i - 1];
-                    newPages[i].PageNumber = i;
-                }
-
-                pages = newPages;
-                countOfPages++;
+                pages[number] = new Page(content, number);
             }
+
             else
                 Console.WriteLine("Incorrect operation");
         }
     }
 }
+
