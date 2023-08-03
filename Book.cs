@@ -10,7 +10,7 @@ namespace ExtraTask
     internal class Book
     {
 
-        private uint pageIndex = 0;
+        private int pageIndex = 0;
 
         private Page[] pages;
 
@@ -45,7 +45,7 @@ namespace ExtraTask
 
         public Page GetNextPage()
         {
-            if (pages[pageIndex + 1] != null)
+            if (pageIndex + 1 <= CountOfPages && pages[pageIndex + 1] != null)
             {
                 pageIndex++;
                 return CurrentPage = pages[pageIndex];
@@ -56,7 +56,7 @@ namespace ExtraTask
 
         public Page GetPreviousPage()
         {
-            if (pages[pageIndex - 1] != null)
+            if (pageIndex - 1 >= 0 && pages[pageIndex - 1] != null)
             {
                 pageIndex--;
                 return CurrentPage = pages[pageIndex];
@@ -67,7 +67,7 @@ namespace ExtraTask
 
         public void GetAllPages()
         {
-            CurrentPage=pages[0];
+            CurrentPage = pages[0];
             for (uint i = 0; i < CountOfPages; i++)
             {
                 if (CurrentPage == null)
