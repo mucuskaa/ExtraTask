@@ -95,6 +95,12 @@ namespace ExtraTask
             else
                 Console.WriteLine("Incorrect operation");
         }
+
+        public void GetBookInfo()
+        {
+            Console.WriteLine($"Title: {Title}\nAuthor: {Author}\nCount of pages: {CountOfPages}\n");
+
+        }
     }
 }
 

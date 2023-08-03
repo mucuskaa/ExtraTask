@@ -68,12 +68,13 @@
 
             while (!stopread)
             {
-                
+
                 Console.WriteLine("1-Start reading");
                 Console.WriteLine("2-Get next page");
                 Console.WriteLine("3-Get previous page");
                 Console.WriteLine("4-Add page");
                 Console.WriteLine("5-Get all pages");
+                Console.WriteLine("6-Get information about book");
                 Console.WriteLine();
                 Console.WriteLine("0-Exit");
 
@@ -81,6 +82,8 @@
                 {
                     Console.WriteLine("Wrong input");
                 }
+
+                Console.Clear();
 
                 switch (a)
                 {
@@ -119,15 +122,18 @@
                             Console.WriteLine("Input page content");
                             content = Console.ReadLine();
 
-                            newBook.AddPage(content,pageNumber);
+                            newBook.AddPage(content, pageNumber);
                             break;
                         }
                     case 5:
                         newBook.GetAllPages();
                         break;
+                    case 6:
+                        newBook.GetBookInfo();
+                        break;
                 }
 
-                    
+
             }
         }
     }
