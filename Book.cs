@@ -79,11 +79,6 @@ namespace ExtraTask
 
         }
 
-        public void GetContetn()
-        {
-            Console.WriteLine(line + CurrentPage.Content);
-        }
-
         public void AddPage(string content, uint number)
         {
             number--;
@@ -100,6 +95,11 @@ namespace ExtraTask
         {
             Console.WriteLine($"Title: {Title}\nAuthor: {Author}\nCount of pages: {CountOfPages}\n");
 
+        }
+
+        public void GetContetn()
+        {
+            Console.WriteLine(line + CurrentPage.Content+$"\n{CurrentPage.PageNumber+1}/{CountOfPages}\n");
         }
     }
 }
