@@ -93,19 +93,19 @@
                     case 1:
                         {
                             newBook.StartReading();
-                            Console.WriteLine(newBook.CurrentPage.Content);
+                            Console.WriteLine(newBook.line+newBook.CurrentPage.Content);
                             break;
                         }
                     case 2:
                         {
                             newBook.GetNextPage();
-                            newBook.GetContetn();
+                            Console.WriteLine(newBook.line + newBook.CurrentPage.Content);
                             break;
                         }
                     case 3:
                         {
                             newBook.GetPreviousPage();
-                            newBook.GetContetn();
+                            Console.WriteLine(newBook.line + newBook.CurrentPage.Content);
                             break;
                         }
                     case 4:
@@ -122,7 +122,9 @@
                             Console.WriteLine("Input page content");
                             content = Console.ReadLine();
 
-                            newBook.AddPage(content, pageNumber);
+                            newBook.AddPage(content, pageNumber, out string error);
+                            if (error != String.Empty)
+                                Console.WriteLine(error);
                             break;
                         }
                     case 5:
@@ -130,12 +132,12 @@
                             newBook.GetAllPages();
                             for (int i = 0; i < newBook.copyPages.Length; i++)
                             {
-                                Console.WriteLine(newBook.line + newBook.copyPages[i].Content+'\n');
+                                Console.WriteLine(newBook.line + newBook.copyPages[i].Content + '\n');
                             }
                             break;
                         }
                     case 6:
-                        newBook.GetBookInfo();
+                        Console.WriteLine($"Title: {newBook.Title}\nAuthor: {newBook.Author}\nCount of pages: {newBook.CountOfPages}\n");
                         break;
                 }
 

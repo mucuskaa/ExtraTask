@@ -49,7 +49,7 @@ namespace ExtraTask
         {
             if (pageIndex + 1 <= CountOfPages && pages[pageIndex + 1] != null)
             {
-                return CurrentPage = pages[pageIndex++];
+                return CurrentPage = pages[++pageIndex];
             }
 
             return CurrentPage = pages[0];
@@ -81,26 +81,17 @@ namespace ExtraTask
             return copyPages;
         }
 
-        public void GetContetn()
+        public void AddPage(string content, uint number,out string errorMessage)
         {
-            Console.WriteLine(line + CurrentPage.Content);
-        }
-
-        public void AddPage(string content, uint number)
-        {
+            errorMessage = string.Empty;
             var index = number - 1;
+
             if (index <= pages.Length)
             {
                 pages[index] = new Page(content, index);
             }
             else
-                Console.WriteLine("Incorrect operation");
-        }
-
-        public void GetBookInfo()
-        {
-            Console.WriteLine($"Title: {Title}\nAuthor: {Author}\nCount of pages: {CountOfPages}\n");
-
+                errorMessage="Incorrect operation\n";
         }
     }
 }
