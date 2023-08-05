@@ -47,8 +47,7 @@ namespace ExtraTask
         {
             if (pageIndex + 1 <= CountOfPages && pages[pageIndex + 1] != null)
             {
-                pageIndex++;
-                return CurrentPage = pages[pageIndex];
+                return CurrentPage = pages[pageIndex++];
             }
 
             return CurrentPage = pages[0];
@@ -58,8 +57,7 @@ namespace ExtraTask
         {
             if (pageIndex - 1 >= 0 && pages[pageIndex - 1] != null)
             {
-                pageIndex--;
-                return CurrentPage = pages[pageIndex];
+                return CurrentPage = pages[--pageIndex];
             }
 
             return CurrentPage = pages[0];
@@ -67,14 +65,12 @@ namespace ExtraTask
 
         public void GetAllPages()
         {
-            CurrentPage = pages[0];
             for (uint i = 0; i < CountOfPages; i++)
             {
-                if (CurrentPage == null)
+                if (pages[i] == null)
                     break;
 
-                Console.WriteLine(line + CurrentPage.Content + "\n");
-                CurrentPage = pages[i];
+                Console.WriteLine(line + pages[i].Content + "\n");
             }
 
         }
