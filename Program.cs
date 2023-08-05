@@ -93,7 +93,7 @@
                     case 1:
                         {
                             newBook.StartReading();
-                            newBook.GetContetn();
+                            Console.WriteLine(newBook.CurrentPage.Content);
                             break;
                         }
                     case 2:
@@ -126,8 +126,14 @@
                             break;
                         }
                     case 5:
-                        newBook.GetAllPages();
-                        break;
+                        {
+                            newBook.GetAllPages();
+                            for (int i = 0; i < newBook.copyPages.Length; i++)
+                            {
+                                Console.WriteLine(newBook.line + newBook.copyPages[i].Content+'\n');
+                            }
+                            break;
+                        }
                     case 6:
                         newBook.GetBookInfo();
                         break;

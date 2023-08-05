@@ -14,6 +14,8 @@ namespace ExtraTask
 
         private Page[] pages;
 
+        public Page[] copyPages;
+
         public string line = new string(' ', 18);
         public uint CountOfPages { get; }
         public string Title { get; }
@@ -63,16 +65,20 @@ namespace ExtraTask
             return CurrentPage = pages[0];
         }
 
-        public void GetAllPages()
+        public Page[] GetAllPages()
         {
-            for (uint i = 0; i < CountOfPages; i++)
-            {
-                if (pages[i] == null)
-                    break;
+            uint countNotEmpty;
 
-                Console.WriteLine(line + pages[i].Content + "\n");
+            for (countNotEmpty = 0; countNotEmpty < CountOfPages; countNotEmpty++)
+            {
+                if (pages[countNotEmpty] == null)
+                    break;
             }
 
+            copyPages = new Page[countNotEmpty];
+            Array.Copy(pages, copyPages, countNotEmpty);
+
+            return copyPages;
         }
 
         public void GetContetn()
@@ -82,12 +88,11 @@ namespace ExtraTask
 
         public void AddPage(string content, uint number)
         {
-            number--;
-            if (number <= pages.Length)
+            var index = number - 1;
+            if (index <= pages.Length)
             {
-                pages[number] = new Page(content, number);
+                pages[index] = new Page(content, index);
             }
-
             else
                 Console.WriteLine("Incorrect operation");
         }
