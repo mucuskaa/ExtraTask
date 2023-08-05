@@ -93,6 +93,11 @@ namespace ExtraTask
             else
                 errorMessage="Incorrect operation\n";
         }
+
+        public void GetContetn()
+        {
+            Console.WriteLine(line + CurrentPage.Content+$"\n{CurrentPage.PageNumber+1}/{CountOfPages}\n");
+        }
     }
 }
 
