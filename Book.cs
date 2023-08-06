@@ -14,6 +14,8 @@ namespace ExtraTask
 
         private Page[] pages;
 
+        public Page[] copyPages;
+
         public string line = new string(' ', 18);
         public uint CountOfPages { get; }
         public string Title { get; }
@@ -47,8 +49,7 @@ namespace ExtraTask
         {
             if (pageIndex + 1 <= CountOfPages && pages[pageIndex + 1] != null)
             {
-                pageIndex++;
-                return CurrentPage = pages[pageIndex];
+                return CurrentPage = pages[++pageIndex];
             }
 
             return CurrentPage = pages[0];
@@ -58,49 +59,41 @@ namespace ExtraTask
         {
             if (pageIndex - 1 >= 0 && pages[pageIndex - 1] != null)
             {
-                pageIndex--;
-                return CurrentPage = pages[pageIndex];
+                return CurrentPage = pages[--pageIndex];
             }
 
             return CurrentPage = pages[0];
         }
 
-        public void GetAllPages()
+        public Page[] GetAllPages()
         {
-            CurrentPage = pages[0];
-            for (uint i = 0; i < CountOfPages; i++)
+            uint countNotEmpty;
+
+            for (countNotEmpty = 0; countNotEmpty < CountOfPages; countNotEmpty++)
             {
-                if (CurrentPage == null)
+                if (pages[countNotEmpty] == null)
                     break;
-
-                Console.WriteLine(line + CurrentPage.Content + "\n");
-                CurrentPage = pages[i];
             }
 
+            copyPages = new Page[countNotEmpty];
+            Array.Copy(pages, copyPages, countNotEmpty);
+
+            return copyPages;
         }
 
-        public void AddPage(string content, uint number)
+        public void AddPage(string content, uint number,out string errorMessage)
         {
-            number--;
-            if (number <= pages.Length)
+            errorMessage = string.Empty;
+            var index = number - 1;
+
+            if (index <= pages.Length)
             {
-                pages[number] = new Page(content, number);
+                pages[index] = new Page(content, index);
             }
-
             else
-                Console.WriteLine("Incorrect operation");
+                errorMessage="Incorrect operation\n";
         }
 
-        public void GetBookInfo()
-        {
-            Console.WriteLine($"Title: {Title}\nAuthor: {Author}\nCount of pages: {CountOfPages}\n");
-
-        }
-
-        public void GetContetn()
-        {
-            Console.WriteLine(line + CurrentPage.Content+$"\n{CurrentPage.PageNumber+1}/{CountOfPages}\n");
-        }
     }
 }
 
