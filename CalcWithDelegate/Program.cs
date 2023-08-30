@@ -1,39 +1,24 @@
 ﻿namespace CalcWithDelegate
 {
-    delegate double Calculate(double a, double b);
+    public delegate double Calculate(double a, double b);
+
+
     internal class Program
     {
-        static double Add(double a, double b)
+        public static void Handler()
         {
-            return a + b;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Error: Division by zero is not allowed.Incorrect result");
+            Console.ForegroundColor=ConsoleColor.White;
         }
-
-        static double Subtract(double a, double b)
-        {
-            return a - b;
-        }
-
-        static double Multiply(double a, double b)
-        {
-            return a * b;
-        }
-
-        static double Divide(double a, double b)
-        {
-            if (b != 0)
-            {
-                return a / b;
-            }
-            else
-            {
-                Console.WriteLine("Error: Division by zero is not allowed.Incorrect result");
-                return 0;
-            }
-        }
-
         static void Main(string[] args)
         {
             double a, b;
+            bool check = true;
+            Calculate calculateDelegate = null;
+            DivideByZero divideByZero = new DivideByZero();
+
+            divideByZero.DivideByZeroEvent += new EventDivideByZero(Handler);
 
             Console.WriteLine("Input number A and number B");
             while (!double.TryParse(Console.ReadLine(), out a) || !double.TryParse(Console.ReadLine(), out b))
@@ -49,26 +34,39 @@
                 Console.WriteLine("Wrong input");
             }
 
-            Calculate calculateDelegate=null;
 
             switch (operation)
             {
                 case '+':
-                    calculateDelegate = new Calculate(Add);
+                    calculateDelegate = (a, b) => (a + b);
                     break;
                 case '-':
-                    calculateDelegate = new Calculate(Subtract);
+                    calculateDelegate = (a, b) => (a - b);
                     break;
                 case '*':
-                    calculateDelegate = new Calculate(Multiply);
+                    calculateDelegate = (a, b) => (a * b);
                     break;
                 case '/':
-                    calculateDelegate = new Calculate(Divide);
-                    break;
-            }
+                    {
+                        if (b == 0)
+                        {
+                            divideByZero.EventInvoke();
+                            check = false;
+                        }
+                        else
+                        {
 
-            double res=calculateDelegate.Invoke(a, b);
-            Console.WriteLine($"{a} {operation} {b} = {res}");
+                            calculateDelegate = (a, b) => (a / b);
+                        }
+
+                        break;
+                    }
+            }
+            if (check)
+            {
+                double res = calculateDelegate.Invoke(a, b);
+                Console.WriteLine($"{a} {operation} {b} = {res}");
+            }
         }
     }
 }
