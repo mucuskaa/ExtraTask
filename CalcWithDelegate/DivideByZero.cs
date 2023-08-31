@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace CalcWithDelegate
 {
-    public delegate void EventDivideByZero();
     internal class DivideByZero
     {
 
-        public event EventDivideByZero DivideByZeroEvent = null;
+        public static event EventHandler DivideByZeroEvent = null;
 
-        public void EventInvoke()
+        public static void EventInvoke()
         {
-            DivideByZeroEvent.Invoke();
+            DivideByZeroEvent.Invoke(null, EventArgs.Empty);
         }
 
     }

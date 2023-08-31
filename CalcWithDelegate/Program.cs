@@ -5,20 +5,20 @@
 
     internal class Program
     {
-        public static void Handler()
+        public static void Handler(object sender, EventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Error: Division by zero is not allowed.Incorrect result");
-            Console.ForegroundColor=ConsoleColor.White;
+            Console.WriteLine("Error: Division by zero is not allowed");
+            Console.ResetColor();
         }
         static void Main(string[] args)
         {
             double a, b;
             bool check = true;
             Calculate calculateDelegate = null;
-            DivideByZero divideByZero = new DivideByZero();
+            DivideByZero.DivideByZeroEvent += new EventHandler(Handler);
 
-            divideByZero.DivideByZeroEvent += new EventDivideByZero(Handler);
+
 
             Console.WriteLine("Input number A and number B");
             while (!double.TryParse(Console.ReadLine(), out a) || !double.TryParse(Console.ReadLine(), out b))
@@ -50,7 +50,7 @@
                     {
                         if (b == 0)
                         {
-                            divideByZero.EventInvoke();
+                            DivideByZero.EventInvoke();
                             check = false;
                         }
                         else
