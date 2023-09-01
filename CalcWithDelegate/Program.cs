@@ -1,22 +1,20 @@
 ﻿namespace CalcWithDelegate
 {
-    public delegate double Calculate(double a, double b);
-
+    delegate double Calculate(double a, double b);
 
     internal class Program
     {
         public static void Handler(object sender, EventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Error: Division by zero is not allowed");
+            Console.WriteLine("Error: Division by zero is not allowed. Incorrect result");
             Console.ResetColor();
         }
         static void Main(string[] args)
         {
             double a, b;
-            bool check = true;
             Calculate calculateDelegate = null;
-            DivideByZero.DivideByZeroEvent += new EventHandler(Handler);
+            Calculator.DivideByZeroEvent += new EventHandler(Handler);
 
 
 
@@ -38,35 +36,22 @@
             switch (operation)
             {
                 case '+':
-                    calculateDelegate = (a, b) => (a + b);
+                    calculateDelegate = Calculator.Add;
                     break;
                 case '-':
-                    calculateDelegate = (a, b) => (a - b);
+                    calculateDelegate = Calculator.Subtract;
                     break;
                 case '*':
-                    calculateDelegate = (a, b) => (a * b);
+                    calculateDelegate = Calculator.Multiply;
                     break;
                 case '/':
-                    {
-                        if (b == 0)
-                        {
-                            DivideByZero.EventInvoke();
-                            check = false;
-                        }
-                        else
-                        {
+                    calculateDelegate = Calculator.Divide;
+                    break;
 
-                            calculateDelegate = (a, b) => (a / b);
-                        }
+            }
 
-                        break;
-                    }
-            }
-            if (check)
-            {
-                double res = calculateDelegate.Invoke(a, b);
-                Console.WriteLine($"{a} {operation} {b} = {res}");
-            }
+            double res = calculateDelegate.Invoke(a, b);
+            Console.WriteLine($"{a} {operation} {b} = {res}");
         }
     }
 }
