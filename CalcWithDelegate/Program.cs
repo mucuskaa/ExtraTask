@@ -1,6 +1,6 @@
 ﻿namespace CalcWithDelegate
 {
-    delegate double Calculate(double a, double b);
+    delegate double? Calculate(double a, double b);
 
     internal class Program
     {
@@ -50,7 +50,7 @@
 
             }
 
-            double res = calculateDelegate.Invoke(a, b);
+            double? res = calculateDelegate.Invoke(a, b);
             Console.WriteLine($"{a} {operation} {b} = {res}");
         }
     }
