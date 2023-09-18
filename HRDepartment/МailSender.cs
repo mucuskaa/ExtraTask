@@ -12,7 +12,7 @@ namespace HRDepartment
         {
             var age = DateTime.Today.Year - candidate.DateOfBirth.Year;
             if (age < 18)
-                throw new TooYoungException("Candidate is too young", (byte)age);
+                throw new TooYoungException("We cannot hire an underage candidate", (byte)age);
 
             if (EmploeeDepartment.ApproveRequest(candidate))
             {
@@ -25,11 +25,11 @@ namespace HRDepartment
         }
         private static void ApproveMessage(uint salary)
         {
-            Console.WriteLine($"you are hired\nYour salary is {salary}");
+            Console.WriteLine($"I am pleased to inform you that your request has been approved.\nYour salary is {salary}");
         }
         private static void DisapproveMessage()
         {
-            Console.WriteLine("you are not hired");
+            Console.WriteLine("I regret to inform you that your request has been disapproved.");
         }
     }
 }
