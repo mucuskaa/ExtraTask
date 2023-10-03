@@ -23,7 +23,7 @@
             {
                 try
                 {
-                    Console.WriteLine(c.Key.Name + " - " + (c.Value ? "Employed" : "Not employed"));
+                    Console.WriteLine($"{c.Key.Name} - {(c.Value ? "Employed" : "Not employed")}");
                     МailSender.SendApprove(c);
                     Console.WriteLine(new string('-', 20));
                 }
