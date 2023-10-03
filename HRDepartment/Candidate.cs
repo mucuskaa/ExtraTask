@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HRDepartment
 {
-    public class Candidate:IComparable<Candidate>
+    public class Candidate : IComparable<Candidate>
     {
         public string Name { get; }
         public double Experience { get; }
@@ -28,12 +28,12 @@ namespace HRDepartment
 
         public int CompareTo(Candidate? other)
         {
-            if (this.Experience<other.Experience)
+            if (Experience < other.Experience)
                 return -1;
-            else if (this.Experience > other.Experience)
+            if (Experience > other.Experience)
                 return 1;
-            else
-                return 0;
+
+            return 0;
         }
 
     }
