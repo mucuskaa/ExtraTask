@@ -8,27 +8,23 @@ namespace HRDepartment
 {
     static class МailSender
     {
-        private const string disapprovalMessage = "I regret to inform you that your request has been disapproved.";
+        private const string DisapprovalMessage = "I regret to inform you that your request has been disapproved.";
+        private const string ApprovalMessage = "I am pleased to inform you that your request has been approved.\nYour salary is";
 
-        public static void SendApprove(KeyValuePair<Candidate,bool> keyValuePair)
+        public static void SendApprove(KeyValuePair<Candidate, bool> candidateData)
         {
-
-            var age = DateTime.Today.Year - keyValuePair.Key.DateOfBirth.Year;
+            var age = DateTime.Today.Year - candidateData.Key.DateOfBirth.Year;
             if (age < 18)
                 throw new TooYoungException("We cannot hire an underage candidate", (byte)age);
 
-            if (keyValuePair.Value)
+            if (candidateData.Value)
             {
-                ApproveMessage(EmploeeDepartment.CalculateSalary(keyValuePair.Key));
+                Console.WriteLine($"{ApprovalMessage} {EmploeeDepartment.CalculateSalary(candidateData.Key)}");
             }
             else
             {
-                Console.WriteLine(disapprovalMessage);
+                Console.WriteLine(DisapprovalMessage);
             }
-        }
-        public static void ApproveMessage(uint salary)
-        {
-            Console.WriteLine($"I am pleased to inform you that your request has been approved.\nYour salary is {salary}");
         }
     }
 }
