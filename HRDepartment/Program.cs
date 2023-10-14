@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            var candidates = new Candidate[6]
+            var candidates = new List<Candidate>
             {
                 new Candidate("Lisa", 5, new DateTime(2014, 5, 11),4000),
                 new Candidate("Lis", 5.4, new DateTime(2000, 5, 11),5000),
@@ -14,17 +14,14 @@
                 new Candidate("Tom", 2, new DateTime(1991, 12, 1),9000)
             };
 
-            var candidatesList = new MyCollection<Candidate>(candidates);
+            var sortedCandidades = CandidateSelector.SelectCandidates(2, candidates);
 
-            var sorting = new CandidateSelector();
-            var sortedCandidades = sorting.SelectCandidates(2, candidatesList);
-
-            foreach (var c in sortedCandidades)
+            foreach (var candidate in sortedCandidades)
             {
                 try
                 {
-                    Console.WriteLine($"{c.Key.Name} - {(c.Value ? "Employed" : "Not employed")}");
-                    МailSender.SendApprove(c);
+                    Console.WriteLine($"{candidate.Key.Name} - {(candidate.Value ? "Employed" : "Not employed")}");
+                    МailSender.SendApprove(candidate);
                     Console.WriteLine(new string('-', 20));
                 }
                 catch (TooYoungException e)

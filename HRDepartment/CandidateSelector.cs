@@ -6,28 +6,16 @@ using System.Threading.Tasks;
 
 namespace HRDepartment
 {
-    public class CandidateSelector
+    public static class CandidateSelector
     {
-        public SortedDictionary<Candidate, bool> SelectCandidates(int quota, MyCollection<Candidate> candidates)
+        public static SortedDictionary<Candidate, bool> SelectCandidates(int quota, List<Candidate> candidates)
         {
-            var selectedCandidates = new SortedDictionary<Candidate, bool>();
-            candidates.OrderBy(c => c.Experience).ToList();
+            var sortedCandidates = candidates.OrderByDescending(candidate => candidate.Experience)
+                .Where(candidate => candidate.Age >= 18 && candidate.Age <= 35)
+                .Take(quota)
+                .ToDictionary(candidate => candidate, v => true);
 
-            foreach (var candidate in candidates)
-            {
-                if (quota > 0 && candidate.Age >= 18 && candidate.Age <= 35)
-                {
-                    selectedCandidates[candidate] = true;
-                    quota--;
-                }
-                else
-                {
-                    selectedCandidates[candidate] = false;
-                }
-
-            }
-
-            return selectedCandidates;
+            return new SortedDictionary<Candidate, bool>(sortedCandidates);
         }
     }
 }
