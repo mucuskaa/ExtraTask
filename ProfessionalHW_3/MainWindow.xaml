@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProfessionalHW_3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Image x:Name="imageControl" HorizontalAlignment="Left" Height="360" Margin="94,20,0,20" VerticalAlignment="Top" Width="360"/>
-        <Button x:Name="NextButton" Content="Далі" HorizontalAlignment="Left" Margin="560,82,0,0" VerticalAlignment="Top" Width="142" Height="60" Click="NextButton_Click"/>
-        <Button x:Name="PreviousButton" Content="Назад" HorizontalAlignment="Left" Margin="560,246,0,0" VerticalAlignment="Top" Width="142" Height="60" Click="PreviousButton_Click"/>
-
-    </Grid>
+        Title="MainWindow" Height="500" Width="800">
+    <StackPanel>
+        <Image x:Name="imageControl" Height="360" Width="360"/>
+        <StackPanel Margin="20" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button x:Name="PreviousButton" Content="Назад" FontSize="20" HorizontalAlignment="Left" Margin="0,0,50,0" VerticalAlignment="Top" Width="142" Height="60" Click="PreviousButton_Click" FontFamily="Calibri"/>
+            <Button x:Name="NextButton" Content="Далі" FontSize="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="142" Height="60" Click="NextButton_Click" FontFamily="Calibri"/>
+        </StackPanel>
+    </StackPanel>
 </Window>

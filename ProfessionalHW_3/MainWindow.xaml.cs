@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Linq;
+
 
 namespace ProfessionalHW_3
 {
@@ -26,34 +16,34 @@ namespace ProfessionalHW_3
         {
             InitializeComponent();
 
-            string imageFolderPath = @"D:\Катя\kurs";
-            imageFiles = Directory.GetFiles(imageFolderPath, "*.jpg");
+            const string ImageFolderPath = @"D:\Катя\kurs";
+            imageFiles = Directory.GetFiles(ImageFolderPath, "*.jpg")
+                               .Concat(Directory.GetFiles(ImageFolderPath, "*.png"))
+                               .ToArray();
             ShowImage(currentIndex);
         }
 
         private void ShowImage(int index)
         {
-            byte[] image = null;
-            if (File.Exists(imageFiles[index]))
-            {
-                image = File.ReadAllBytes(imageFiles[index]);
-            }
-
-            memoryStream = new MemoryStream(image);
-
             if (index >= 0 && index < imageFiles.Length)
             {
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.StreamSource = memoryStream;
-                bitmap.EndInit();
-                imageControl.Source = bitmap;
-                memoryStream.Close();
+                if (File.Exists(imageFiles[index]))
+                {
+                    var image = File.ReadAllBytes(imageFiles[index]);
+
+                    memoryStream = new MemoryStream(image);
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = memoryStream;
+                    bitmap.EndInit();
+                    imageControl.Source = bitmap;
+                }
             }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
+            memoryStream?.Close();
 
             currentIndex++;
             if (currentIndex >= imageFiles.Length)
@@ -65,6 +55,7 @@ namespace ProfessionalHW_3
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
+            memoryStream?.Close();
 
             currentIndex--;
             if (currentIndex < 0)
