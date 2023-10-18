@@ -33,20 +33,27 @@ namespace ProfessionalHW_3
 
         private void ShowImage(int index)
         {
+            byte[] image = null;
+            if (File.Exists(imageFiles[index]))
+            {
+                image = File.ReadAllBytes(imageFiles[index]);
+            }
+
+            memoryStream = new MemoryStream(image);
+
             if (index >= 0 && index < imageFiles.Length)
             {
-                memoryStream = new MemoryStream(File.ReadAllBytes(imageFiles[index]));
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.StreamSource = memoryStream;
                 bitmap.EndInit();
                 imageControl.Source = bitmap;
+                memoryStream.Close();
             }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            memoryStream.Close();
 
             currentIndex++;
             if (currentIndex >= imageFiles.Length)
@@ -58,7 +65,6 @@ namespace ProfessionalHW_3
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            memoryStream.Close();
 
             currentIndex--;
             if (currentIndex < 0)
