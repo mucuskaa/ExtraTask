@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,25 @@ namespace HRDepartment
     {
         public static SortedDictionary<Candidate, bool> SelectCandidates(int quota, List<Candidate> candidates)
         {
-            var sortedCandidates = candidates.OrderByDescending(candidate => candidate.Experience)
-                .Where(candidate => candidate.Age >= 18 && candidate.Age <= 35)
-                .Take(quota)
-                .ToDictionary(candidate => candidate, v => true);
+            var sortedDic = new SortedDictionary<Candidate, bool>(candidates.ToDictionary(candidate => candidate, v => false), new CandidateComparer());
 
-            return new SortedDictionary<Candidate, bool>(sortedCandidates);
+            int i = 0;
+            int count = 0;
+
+            while (i < sortedDic.Count && count < quota)
+            {
+                var candidateData = sortedDic.ElementAt(i);
+
+                if (candidateData.Key.Age >= 18 && candidateData.Key.Age <= 35)
+                {
+                    sortedDic[candidateData.Key] = true;
+                    count++;
+
+                }
+                i++;
+            }
+
+            return sortedDic;
         }
     }
 }
