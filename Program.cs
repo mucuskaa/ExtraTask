@@ -61,18 +61,20 @@
 
             };
 
-            Book newBook = new Book("Vuk", "István Fekete", 8, text,1);
+            Book newBook = new Book("Vuk", "István Fekete", 300, text);
 
             uint a;
             bool stopread = false;
 
             while (!stopread)
             {
-                
+
                 Console.WriteLine("1-Start reading");
-                Console.WriteLine("2-Get previous page");
-                Console.WriteLine("3-Get next page");
+                Console.WriteLine("2-Get next page");
+                Console.WriteLine("3-Get previous page");
                 Console.WriteLine("4-Add page");
+                Console.WriteLine("5-Get all pages");
+                Console.WriteLine("6-Get information about book");
                 Console.WriteLine();
                 Console.WriteLine("0-Exit");
 
@@ -81,20 +83,31 @@
                     Console.WriteLine("Wrong input");
                 }
 
+                Console.Clear();
+
                 switch (a)
                 {
                     case 0:
                         stopread = true;
                         continue;
                     case 1:
-                        Console.WriteLine(newBook.StartReading());
-                        break;
+                        {
+                            newBook.StartReading();
+                            Console.WriteLine(newBook.line+newBook.CurrentPage.Content);
+                            break;
+                        }
                     case 2:
-                        Console.WriteLine(newBook.GetPreviousPage());
-                        break;
+                        {
+                            newBook.GetNextPage();
+                            Console.WriteLine(newBook.line + newBook.CurrentPage.Content);
+                            break;
+                        }
                     case 3:
-                        Console.WriteLine(newBook.GetNextPage());
-                        break;
+                        {
+                            newBook.GetPreviousPage();
+                            Console.WriteLine(newBook.line + newBook.CurrentPage.Content);
+                            break;
+                        }
                     case 4:
                         {
                             uint pageNumber;
@@ -109,12 +122,26 @@
                             Console.WriteLine("Input page content");
                             content = Console.ReadLine();
 
-                            newBook.AddPage(content,pageNumber);
+                            newBook.AddPage(content, pageNumber, out string error);
+                            if (error != String.Empty)
+                                Console.WriteLine(error);
                             break;
                         }
+                    case 5:
+                        {
+                            newBook.GetAllPages();
+                            for (int i = 0; i < newBook.copyPages.Length; i++)
+                            {
+                                Console.WriteLine(newBook.line + newBook.copyPages[i].Content + '\n');
+                            }
+                            break;
+                        }
+                    case 6:
+                        Console.WriteLine($"Title: {newBook.Title}\nAuthor: {newBook.Author}\nCount of pages: {newBook.CountOfPages}\n");
+                        break;
                 }
 
-                    
+
             }
         }
     }
